@@ -9,12 +9,14 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router";
 import "./index.css";
 import Landing from "./pages/Landing.tsx";
+import Dashboard from "./pages/Dashboard.tsx";
+import CountryDetail from "./pages/CountryDetail.tsx";
+import Events from "./pages/Events.tsx";
+import EventDetail from "./pages/EventDetail.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import "./types/global.d.ts";
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
-
-
 
 function RouteSyncer() {
   const location = useLocation();
@@ -39,7 +41,6 @@ function RouteSyncer() {
   return null;
 }
 
-
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <VlyToolbar />
@@ -49,7 +50,11 @@ createRoot(document.getElementById("root")!).render(
           <RouteSyncer />
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/auth" element={<AuthPage redirectAfterAuth="/" />} /> {/* TODO: change redirect after auth to correct page */}
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/country/:id" element={<CountryDetail />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/event/:id" element={<EventDetail />} />
+            <Route path="/auth" element={<AuthPage redirectAfterAuth="/dashboard" />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
